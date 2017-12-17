@@ -2,30 +2,40 @@ package ru.nsu.hci.batenev.javalabs.lab9;
 
 import java.util.Iterator;
 
-public class LinkedList<E> implements Iterable<E>{
+public class LinkedList<E> implements Iterable<E> {
     private Node<E> firstElement;
     private Node<E> lastElement;
     private int size;
 
     public LinkedList() {
-        lastElement = new Node<>(firstElement, null, null);
-        firstElement = new Node<>(null, null, lastElement);
+        firstElement = null;
+        lastElement = null;
         size = 0;
     }
 
     public void addFirst(E e) {
-        Node<E> node = firstElement;
-        node.setCurrentElement(e);
-        firstElement = new Node<>(null, null, node);
-        node.setPreviousElement(firstElement);
+        if (firstElement == null) {
+            Node<E> node = new Node<>(null, e, null);
+            firstElement = node;
+            lastElement = node;
+        } else {
+            Node<E> node = firstElement;
+            firstElement = new Node<>(null, e, node);
+            node.setPreviousElement(firstElement);
+        }
         size++;
     }
 
     public void addLast(E e) {
-        Node<E> node = lastElement;
-        node.setCurrentElement(e);
-        lastElement = new Node<>(node, null, null);
-        node.setNextElement(lastElement);
+        if (lastElement == null) {
+            Node<E> node = new Node<>(null, e, null);
+            lastElement = node;
+            firstElement = node;
+        } else {
+            Node<E> node = lastElement;
+            lastElement = new Node<>(node, e, null);
+            node.setNextElement(lastElement);
+        }
         size++;
     }
 
@@ -46,7 +56,7 @@ public class LinkedList<E> implements Iterable<E>{
     }
 
     public E getElement(int index) {
-        Node<E> node = firstElement.getNextElement();
+        Node<E> node = firstElement;
         for (int i = 0; i < index; i++) {
             node = node.getNextElement();
         }
