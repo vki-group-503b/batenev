@@ -40,15 +40,49 @@ public class LinkedList<E> implements Iterable<E> {
     }
 
     public void removeFirst() {
-        Node<E> node = firstElement;
-        firstElement = node.getNextElement();
-        size--;
+        if (size > 0) {
+            switch (size) {
+                case 1:
+                    firstElement = null;
+                    lastElement = null;
+                    size--;
+                    break;
+                case 2:
+                    Node<E> replaceNode = new Node<>(null, firstElement.getNextElement().getCurrentElement(), null);
+                    firstElement = replaceNode;
+                    lastElement = replaceNode;
+                    size--;
+                    break;
+                default:
+                    Node<E> node = firstElement;
+                    firstElement = node.getNextElement();
+                    size--;
+                    break;
+            }
+        }
     }
 
     public void removeLast() {
-        Node<E> node = lastElement;
-        lastElement = node.getPreviousElement();
-        size--;
+        if (size > 0) {
+            switch (size) {
+                case 1:
+                    firstElement = null;
+                    lastElement = null;
+                    size--;
+                    break;
+                case 2:
+                    Node<E> replaceNode = new Node<>(null, lastElement.getPreviousElement().getCurrentElement(), null);
+                    lastElement = replaceNode;
+                    firstElement = replaceNode;
+                    size--;
+                    break;
+                default:
+                    Node<E> node = lastElement;
+                    lastElement = node.getPreviousElement();
+                    size--;
+                    break;
+            }
+        }
     }
 
     public int getSize() {
